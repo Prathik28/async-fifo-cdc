@@ -1,0 +1,2 @@
+# rtl/files.f is a source file list, not Fortran: leave it out of language statistics.
+*.f linguist-detectable=false
