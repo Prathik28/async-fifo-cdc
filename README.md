@@ -52,6 +52,25 @@ A word is written on a `wclk` edge where `winc && !wfull`. `rdata` is valid whil
 Hold `arst_n` low for at least one period of the slower clock, with both clocks
 running when it is released.
 
+## Waveform
+
+![Simulation waveform: four words are written, a fifth is refused with an overflow pulse, the words are read in order, and a fifth read raises an underflow pulse](docs/waveform.svg)
+
+A 4-deep FIFO with a 10 ns write clock and a 16 ns read clock:
+
+* Four writes fill it and `wfull` rises. The fifth word, `A5`, is refused and
+  `woverflow` pulses.
+* `rempty` falls only after the write pointer has crossed into the read domain.
+  `rlevel` can lag the true count during this time.
+* Words `A1` to `A4` come out in order. A fifth read request is refused and
+  `runderflow` pulses.
+* `wfull` falls only after the read pointer has crossed back.
+
+The image is drawn from an Icarus Verilog run of
+[`tb/tb_waveform.sv`](tb/tb_waveform.sv), which checks the data order and pulse
+counts. Regenerate it with `./scripts/waveform.sh` (needs Icarus Verilog and
+Python 3). CI does not regenerate it.
+
 ## Verification
 
 | Check | What it covers |
@@ -113,12 +132,14 @@ Vivado utilization, and say nothing about timing.
 
 ```
 rtl/          design sources (files.f lists them)
-tb/           self-checking testbench
+tb/           self-checking testbench and the waveform testbench
 sva/          assertions, attached with bind
 formal/       SymbiYosys harness and configuration
-scripts/      one script per CI check
+scripts/      CI check scripts and waveform generation
 constraints/  Xilinx timing constraints
-docs/         design notes
+vivado/       Vivado script for the ZedBoard part (not yet run in Vivado)
+docs/         design notes, architecture diagram and waveform
+.github/      GitHub Actions workflows, one per check
 ```
 
 See [docs/design.md](docs/design.md) for the reasoning behind the design.
