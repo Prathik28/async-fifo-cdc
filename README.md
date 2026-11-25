@@ -1,6 +1,6 @@
 # Asynchronous FIFO for Clock Domain Crossing
 
-[![CI](https://github.com/Prathik28/async-fifo-cdc/actions/workflows/ci.yml/badge.svg)](https://github.com/Prathik28/async-fifo-cdc/actions/workflows/ci.yml)
+[![Lint](https://github.com/Prathik28/async-fifo-cdc/actions/workflows/lint.yml/badge.svg)](https://github.com/Prathik28/async-fifo-cdc/actions/workflows/lint.yml) [![Synthesis](https://github.com/Prathik28/async-fifo-cdc/actions/workflows/synth.yml/badge.svg)](https://github.com/Prathik28/async-fifo-cdc/actions/workflows/synth.yml) [![Simulation](https://github.com/Prathik28/async-fifo-cdc/actions/workflows/sim.yml/badge.svg)](https://github.com/Prathik28/async-fifo-cdc/actions/workflows/sim.yml) [![Fault injection](https://github.com/Prathik28/async-fifo-cdc/actions/workflows/mutation.yml/badge.svg)](https://github.com/Prathik28/async-fifo-cdc/actions/workflows/mutation.yml) [![Formal](https://github.com/Prathik28/async-fifo-cdc/actions/workflows/formal.yml/badge.svg)](https://github.com/Prathik28/async-fifo-cdc/actions/workflows/formal.yml)
 
 A parameterized dual-clock FIFO in SystemVerilog, using Gray-code pointers and
 multi-flop synchronizers. It is checked by lint, synthesis, simulation,
