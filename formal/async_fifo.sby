@@ -1,0 +1,26 @@
+[tasks]
+prove
+cover
+
+[options]
+prove: mode prove
+cover: mode cover
+cover: depth 40
+multiclock on
+
+[engines]
+prove: abc pdr
+cover: smtbmc z3
+
+[script]
+read_verilog -sv -formal -DFORMAL sync_ff.sv reset_sync.sv fifo_mem.sv wptr_full.sv rptr_empty.sv async_fifo.sv fv_async_fifo.sv
+prep -top fv_async_fifo
+
+[files]
+rtl/sync_ff.sv
+rtl/reset_sync.sv
+rtl/fifo_mem.sv
+rtl/wptr_full.sv
+rtl/rptr_empty.sv
+rtl/async_fifo.sv
+formal/fv_async_fifo.sv
