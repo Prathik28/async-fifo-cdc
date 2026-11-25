@@ -8,22 +8,13 @@ assertions, fault injection and formal proof, all run by GitHub Actions.
 
 ## Architecture
 
-```mermaid
-flowchart LR
-    subgraph W["Write domain (wclk)"]
-        WP["wptr_full<br/>binary + Gray pointer<br/>full, level, overflow"]
-        SR["sync_ff<br/>read pointer in"]
-    end
-    MEM[("fifo_mem<br/>dual-clock storage")]
-    subgraph R["Read domain (rclk)"]
-        RP["rptr_empty<br/>binary + Gray pointer<br/>empty, level, underflow"]
-        SW["sync_ff<br/>write pointer in"]
-    end
-    WP -- "waddr, wen" --> MEM
-    RP -- "raddr" --> MEM
-    WP -- "wgray" --> SW --> RP
-    RP -- "rgray" --> SR --> WP
-```
+![async_fifo architecture: pointer logic in each clock domain, dual-clock memory, Gray pointer synchronizers and reset synchronizers](docs/architecture.svg)
+
+Data moves from the write domain to the read domain through `fifo_mem`. The two
+Gray-coded pointers cross through synchronizers: `wgray` into the read domain
+and `rgray` into the write domain. Each synchronizer is clocked and reset by the
+domain receiving the pointer, and has `SYNC_STAGES` flops (two are drawn, the
+default).
 
 A `reset_sync` in each domain turns the single `arst_n` into a reset that
 asserts asynchronously and releases synchronously.

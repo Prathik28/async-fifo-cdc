@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1000" width="1200" height="1000" role="img" aria-labelledby="t d">
+<title id="t">async_fifo architecture</title><desc id="d">Write and read clock domains with pointer logic, dual-clock memory, two Gray pointer synchronizers and per-domain reset synchronizers.</desc>
+<defs><marker id="a111827" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#111827"/></marker><marker id="a1d4ed8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1d4ed8"/></marker><marker id="a047857" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#047857"/></marker><marker id="ab45309" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b45309"/></marker><marker id="a7c3aed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#7c3aed"/></marker></defs>
+<rect x="0" y="0" width="1200" height="1000" rx="0" fill="#ffffff" stroke="#ffffff" stroke-width="0"/>
+<rect x="10" y="56" width="585" height="872" rx="14" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5"/>
+<rect x="605" y="56" width="585" height="872" rx="14" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1.5"/>
+<text x="30" y="84" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="16" fill="#1d4ed8" text-anchor="start" font-weight="700">WRITE CLOCK DOMAIN  (wclk)</text>
+<text x="1170" y="84" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="16" fill="#047857" text-anchor="end" font-weight="700">READ CLOCK DOMAIN  (rclk)</text>
+<path d="M600,56 L600,928" fill="none" stroke="#4b5563" stroke-width="1.5" stroke-dasharray="7 6"/>
+<text x="600" y="28" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="20" fill="#111827" text-anchor="middle" font-weight="700">async_fifo</text>
+<text x="600" y="48" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" fill="#4b5563" text-anchor="middle" font-weight="400">dashed line = clock domain boundary  •  thick lines = Gray pointer buses  •  “signal &lt;= …” = registered</text>
+<rect x="445" y="108" width="310" height="128" rx="8" fill="#f5f3ff" stroke="#7c3aed" stroke-width="2"/>
+<text x="600" y="132" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="14" fill="#7c3aed" text-anchor="middle" font-weight="700">u_mem : fifo_mem</text>
+<text x="600" y="154" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" fill="#111827" text-anchor="middle" font-weight="400">2^ADDR_WIDTH words × DATA_WIDTH</text>
+<text x="600" y="180" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" fill="#1d4ed8" text-anchor="middle" font-weight="400">write: synchronous to wclk</text>
+<text x="600" y="198" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" fill="#047857" text-anchor="middle" font-weight="400">read: asynchronous (LUT RAM)</text>
+<text x="600" y="220" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#111827" text-anchor="middle" font-weight="400">rdata = mem[raddr]</text>
+<rect x="130" y="264" width="290" height="520" rx="10" fill="#ffffff" stroke="#1d4ed8" stroke-width="2.2"/>
+<text x="275" y="288" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="15" fill="#1d4ed8" text-anchor="middle" font-weight="700">u_wptr : wptr_full</text>
+<rect x="780" y="264" width="290" height="520" rx="10" fill="#ffffff" stroke="#047857" stroke-width="2.2"/>
+<text x="925" y="288" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="15" fill="#047857" text-anchor="middle" font-weight="700">u_rptr : rptr_empty</text>
+<rect x="145" y="302" width="260" height="62" rx="6" fill="#ffffff" stroke="#1d4ed8" stroke-width="1.3"/>
+<text x="275.0" y="321" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="13" fill="#1d4ed8" text-anchor="middle" font-weight="700">Write gate</text>
+<text x="275.0" y="341" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#111827" text-anchor="middle" font-weight="400">wen = winc &amp; ~wfull</text>
+<rect x="145" y="388" width="260" height="80" rx="6" fill="#ffffff" stroke="#1d4ed8" stroke-width="1.3"/>
+<text x="275.0" y="407" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="13" fill="#1d4ed8" text-anchor="middle" font-weight="700">Binary pointer (ADDR_WIDTH+1)</text>
+<text x="275.0" y="427" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#111827" text-anchor="middle" font-weight="400">wbin_next = wbin + wen</text>
+<text x="275.0" y="444" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#111827" text-anchor="middle" font-weight="400">waddr = wbin[ADDR_WIDTH-1:0]</text>
+<rect x="145" y="492" width="260" height="80" rx="6" fill="#ffffff" stroke="#1d4ed8" stroke-width="1.3"/>
+<text x="275.0" y="511" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="13" fill="#1d4ed8" text-anchor="middle" font-weight="700">Gray encode, then register</text>
+<text x="275.0" y="531" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#111827" text-anchor="middle" font-weight="400">wgray_next =</text>
+<text x="275.0" y="548" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#111827" text-anchor="middle" font-weight="400">wbin_next ^ (wbin_next &gt;&gt; 1)</text>
+<rect x="145" y="590" width="260" height="94" rx="6" fill="#ffffff" stroke="#1d4ed8" stroke-width="1.3"/>
+<text x="275.0" y="609" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="13" fill="#1d4ed8" text-anchor="middle" font-weight="700">Full and overflow flags</text>
+<text x="275.0" y="629" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#111827" text-anchor="middle" font-weight="400">wfull &lt;= wgray_next ==</text>
+<text x="275.0" y="646" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#111827" text-anchor="middle" font-weight="400">{~top2, rest} of rgray_sync</text>
+<text x="275.0" y="663" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#111827" text-anchor="middle" font-weight="400">woverflow &lt;= winc &amp; wfull</text>
+<rect x="145" y="692" width="260" height="86" rx="6" fill="#ffffff" stroke="#1d4ed8" stroke-width="1.3"/>
+<text x="275.0" y="711" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="13" fill="#1d4ed8" text-anchor="middle" font-weight="700">Level (never reads low)</text>
+<text x="275.0" y="731" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="11" fill="#111827" text-anchor="middle" font-weight="400">level = wbin_next - bin(rgray_sync)</text>
+<text x="275.0" y="748" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="11" fill="#111827" text-anchor="middle" font-weight="400">wlevel &lt;= level</text>
+<text x="275.0" y="765" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="11" fill="#111827" text-anchor="middle" font-weight="400">walmost_full &lt;= level &gt;= AFULL_THRESH</text>
+<rect x="795" y="302" width="260" height="62" rx="6" fill="#ffffff" stroke="#047857" stroke-width="1.3"/>
+<text x="925.0" y="321" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="13" fill="#047857" text-anchor="middle" font-weight="700">Read gate</text>
+<text x="925.0" y="341" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#111827" text-anchor="middle" font-weight="400">ren = rinc &amp; ~rempty</text>
+<rect x="795" y="388" width="260" height="80" rx="6" fill="#ffffff" stroke="#047857" stroke-width="1.3"/>
+<text x="925.0" y="407" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="13" fill="#047857" text-anchor="middle" font-weight="700">Binary pointer (ADDR_WIDTH+1)</text>
+<text x="925.0" y="427" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#111827" text-anchor="middle" font-weight="400">rbin_next = rbin + ren</text>
+<text x="925.0" y="444" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#111827" text-anchor="middle" font-weight="400">raddr = rbin[ADDR_WIDTH-1:0]</text>
+<rect x="795" y="492" width="260" height="80" rx="6" fill="#ffffff" stroke="#047857" stroke-width="1.3"/>
+<text x="925.0" y="511" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="13" fill="#047857" text-anchor="middle" font-weight="700">Gray encode, then register</text>
+<text x="925.0" y="531" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#111827" text-anchor="middle" font-weight="400">rgray_next =</text>
+<text x="925.0" y="548" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#111827" text-anchor="middle" font-weight="400">rbin_next ^ (rbin_next &gt;&gt; 1)</text>
+<rect x="795" y="590" width="260" height="94" rx="6" fill="#ffffff" stroke="#047857" stroke-width="1.3"/>
+<text x="925.0" y="609" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="13" fill="#047857" text-anchor="middle" font-weight="700">Empty and underflow flags</text>
+<text x="925.0" y="629" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#111827" text-anchor="middle" font-weight="400">rempty &lt;=</text>
+<text x="925.0" y="646" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#111827" text-anchor="middle" font-weight="400">rgray_next == wgray_sync</text>
+<text x="925.0" y="663" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#111827" text-anchor="middle" font-weight="400">runderflow &lt;= rinc &amp; rempty</text>
+<rect x="795" y="692" width="260" height="86" rx="6" fill="#ffffff" stroke="#047857" stroke-width="1.3"/>
+<text x="925.0" y="711" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="13" fill="#047857" text-anchor="middle" font-weight="700">Level (never reads high)</text>
+<text x="925.0" y="731" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="10.5" fill="#111827" text-anchor="middle" font-weight="400">level = bin(wgray_sync) - rbin_next</text>
+<text x="925.0" y="748" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="10.5" fill="#111827" text-anchor="middle" font-weight="400">rlevel &lt;= level</text>
+<text x="925.0" y="765" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="10.5" fill="#111827" text-anchor="middle" font-weight="400">ralmost_empty &lt;= level &lt;= AEMPTY_THRESH</text>
+<path d="M275,364 L275,388" fill="none" stroke="#1d4ed8" stroke-width="1.6" marker-end="url(#a1d4ed8)"/>
+<path d="M275,468 L275,492" fill="none" stroke="#1d4ed8" stroke-width="1.6" marker-end="url(#a1d4ed8)"/>
+<path d="M925,364 L925,388" fill="none" stroke="#047857" stroke-width="1.6" marker-end="url(#a047857)"/>
+<path d="M925,468 L925,492" fill="none" stroke="#047857" stroke-width="1.6" marker-end="url(#a047857)"/>
+<path d="M40,128 L445,128" fill="none" stroke="#111827" stroke-width="1.6" marker-end="url(#a111827)"/>
+<text x="40" y="120" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#111827" text-anchor="start" font-weight="400">wdata[DATA_WIDTH-1:0]</text>
+<path d="M40,156 L445,156" fill="none" stroke="#111827" stroke-width="1.6" marker-end="url(#a111827)"/>
+<text x="40" y="148" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#111827" text-anchor="start" font-weight="400">wclk</text>
+<path d="M755,132 L1160,132" fill="none" stroke="#111827" stroke-width="1.6" marker-end="url(#a111827)"/>
+<text x="1160" y="124" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#111827" text-anchor="end" font-weight="400">rdata[DATA_WIDTH-1:0]</text>
+<path d="M405,318 L432,318 L432,188 L445,188" fill="none" stroke="#1d4ed8" stroke-width="1.6" marker-end="url(#a1d4ed8)"/>
+<text x="424" y="252" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#1d4ed8" text-anchor="end" font-weight="400" stroke="#eff6ff" stroke-width="5" paint-order="stroke" stroke-linejoin="round">wen</text>
+<path d="M405,428 L462,428 L462,236" fill="none" stroke="#1d4ed8" stroke-width="1.6" marker-end="url(#a1d4ed8)"/>
+<text x="470" y="256" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#1d4ed8" text-anchor="start" font-weight="400" stroke="#eff6ff" stroke-width="5" paint-order="stroke" stroke-linejoin="round">waddr</text>
+<path d="M795,428 L738,428 L738,236" fill="none" stroke="#047857" stroke-width="1.6" marker-end="url(#a047857)"/>
+<text x="730" y="256" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#047857" text-anchor="end" font-weight="400" stroke="#ecfdf5" stroke-width="5" paint-order="stroke" stroke-linejoin="round">raddr</text>
+<path d="M24,326 L145,326" fill="none" stroke="#111827" stroke-width="1.6" marker-end="url(#a111827)"/>
+<text x="26" y="320" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#111827" text-anchor="start" font-weight="400">winc</text>
+<path d="M1176,326 L1055,326" fill="none" stroke="#111827" stroke-width="1.6" marker-end="url(#a111827)"/>
+<text x="1174" y="320" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#111827" text-anchor="end" font-weight="400">rinc</text>
+<path d="M145,624 L24,624" fill="none" stroke="#111827" stroke-width="1.6" marker-end="url(#a111827)"/>
+<text x="24" y="618" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#111827" text-anchor="start" font-weight="400">wfull</text>
+<path d="M145,650 L24,650" fill="none" stroke="#111827" stroke-width="1.6" marker-end="url(#a111827)"/>
+<text x="24" y="644" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#111827" text-anchor="start" font-weight="400">woverflow</text>
+<path d="M145,718 L24,718" fill="none" stroke="#111827" stroke-width="1.6" marker-end="url(#a111827)"/>
+<text x="24" y="712" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#111827" text-anchor="start" font-weight="400">wlevel</text>
+<path d="M145,746 L24,746" fill="none" stroke="#111827" stroke-width="1.6" marker-end="url(#a111827)"/>
+<text x="24" y="740" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#111827" text-anchor="start" font-weight="400">walmost_full</text>
+<path d="M1055,624 L1176,624" fill="none" stroke="#111827" stroke-width="1.6" marker-end="url(#a111827)"/>
+<text x="1176" y="618" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#111827" text-anchor="end" font-weight="400">rempty</text>
+<path d="M1055,650 L1176,650" fill="none" stroke="#111827" stroke-width="1.6" marker-end="url(#a111827)"/>
+<text x="1176" y="644" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#111827" text-anchor="end" font-weight="400">runderflow</text>
+<path d="M1055,718 L1176,718" fill="none" stroke="#111827" stroke-width="1.6" marker-end="url(#a111827)"/>
+<text x="1176" y="712" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#111827" text-anchor="end" font-weight="400">rlevel</text>
+<path d="M1055,746 L1176,746" fill="none" stroke="#111827" stroke-width="1.6" marker-end="url(#a111827)"/>
+<text x="1176" y="740" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#111827" text-anchor="end" font-weight="400">ralmost_empty</text>
+<rect x="625" y="790" width="130" height="92" rx="8" fill="#d1fae5" stroke="#047857" stroke-width="2"/>
+<text x="690" y="808" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#047857" text-anchor="middle" font-weight="700">u_sync_w2r</text>
+<rect x="643" y="820" width="36" height="30" rx="3" fill="#ffffff" stroke="#047857" stroke-width="1.3"/>
+<text x="661" y="840" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" fill="#111827" text-anchor="middle" font-weight="400">FF1</text>
+<rect x="701" y="820" width="36" height="30" rx="3" fill="#ffffff" stroke="#047857" stroke-width="1.3"/>
+<text x="719" y="840" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" fill="#111827" text-anchor="middle" font-weight="400">FF2</text>
+<path d="M679,835 L701,835" fill="none" stroke="#047857" stroke-width="1.6" marker-end="url(#a047857)"/>
+<text x="690" y="870" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="11" fill="#4b5563" text-anchor="middle" font-weight="400">SYNC_STAGES, rclk</text>
+<path d="M405,548 L440,548 L440,835 L625,835" fill="none" stroke="#1d4ed8" stroke-width="3" marker-end="url(#a1d4ed8)"/>
+<text x="532" y="826" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="13" fill="#1d4ed8" text-anchor="middle" font-weight="700" stroke="#eff6ff" stroke-width="5" paint-order="stroke" stroke-linejoin="round">wgray</text>
+<path d="M755,835 L772,835 L772,652 L795,652" fill="none" stroke="#047857" stroke-width="3" marker-end="url(#a047857)"/>
+<text x="780" y="857" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#047857" text-anchor="start" font-weight="700" stroke="#ecfdf5" stroke-width="5" paint-order="stroke" stroke-linejoin="round">wgray_sync</text>
+<path d="M772,724 L795,724" fill="none" stroke="#047857" stroke-width="3" marker-end="url(#a047857)"/>
+<rect x="445" y="852" width="130" height="70" rx="8" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2"/>
+<text x="510" y="868" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#1d4ed8" text-anchor="middle" font-weight="700">u_sync_r2w</text>
+<rect x="521" y="877" width="36" height="24" rx="3" fill="#ffffff" stroke="#1d4ed8" stroke-width="1.3"/>
+<text x="539" y="894" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" fill="#111827" text-anchor="middle" font-weight="400">FF1</text>
+<rect x="463" y="877" width="36" height="24" rx="3" fill="#ffffff" stroke="#1d4ed8" stroke-width="1.3"/>
+<text x="481" y="894" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" fill="#111827" text-anchor="middle" font-weight="400">FF2</text>
+<path d="M521,889 L499,889" fill="none" stroke="#1d4ed8" stroke-width="1.6" marker-end="url(#a1d4ed8)"/>
+<text x="510" y="916" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="11" fill="#4b5563" text-anchor="middle" font-weight="400">SYNC_STAGES, wclk</text>
+<path d="M795,548 L760,548 L760,889 L575,889" fill="none" stroke="#047857" stroke-width="3" marker-end="url(#a047857)"/>
+<text x="668" y="906" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="13" fill="#047857" text-anchor="middle" font-weight="700" stroke="#ecfdf5" stroke-width="5" paint-order="stroke" stroke-linejoin="round">rgray</text>
+<path d="M445,889 L425,889 L425,652 L405,652" fill="none" stroke="#1d4ed8" stroke-width="3" marker-end="url(#a1d4ed8)"/>
+<text x="417" y="880" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#1d4ed8" text-anchor="end" font-weight="700" stroke="#eff6ff" stroke-width="5" paint-order="stroke" stroke-linejoin="round">rgray_sync</text>
+<path d="M425,724 L405,724" fill="none" stroke="#1d4ed8" stroke-width="3" marker-end="url(#a1d4ed8)"/>
+<circle cx="772" cy="724" r="4" fill="#047857"/>
+<circle cx="425" cy="724" r="4" fill="#1d4ed8"/>
+<rect x="150" y="940" width="250" height="48" rx="8" fill="#fffbeb" stroke="#b45309" stroke-width="1.8"/>
+<text x="275" y="960" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#b45309" text-anchor="middle" font-weight="700">u_wrst : reset_sync</text>
+<text x="275" y="978" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="11" fill="#4b5563" text-anchor="middle" font-weight="400">async assert, release synced to wclk</text>
+<rect x="800" y="940" width="250" height="48" rx="8" fill="#fffbeb" stroke="#b45309" stroke-width="1.8"/>
+<text x="925" y="960" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#b45309" text-anchor="middle" font-weight="700">u_rrst : reset_sync</text>
+<text x="925" y="978" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="11" fill="#4b5563" text-anchor="middle" font-weight="400">async assert, release synced to rclk</text>
+<path d="M560,964 L400,964" fill="none" stroke="#b45309" stroke-width="1.6" marker-end="url(#ab45309)"/>
+<path d="M640,964 L800,964" fill="none" stroke="#b45309" stroke-width="1.6" marker-end="url(#ab45309)"/>
+<text x="600" y="969" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="14" fill="#b45309" text-anchor="middle" font-weight="700">arst_n</text>
+<text x="140" y="958" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#b45309" text-anchor="end" font-weight="700">wrst_n</text>
+<text x="140" y="976" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="11" fill="#4b5563" text-anchor="end" font-weight="400">resets write side</text>
+<path d="M150,964 L142,964" fill="none" stroke="#b45309" stroke-width="1.6" marker-end="url(#ab45309)"/>
+<text x="1060" y="958" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#b45309" text-anchor="start" font-weight="700">rrst_n</text>
+<text x="1060" y="976" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="11" fill="#4b5563" text-anchor="start" font-weight="400">resets read side</text>
+<path d="M1050,964 L1058,964" fill="none" stroke="#b45309" stroke-width="1.6" marker-end="url(#ab45309)"/>
+</svg>
